@@ -1,0 +1,15 @@
+.order-card{
+  background-color: #ffffff;
+  border-radius: 15px;
+  padding: 10px 20px;
+  border: solid 1px #CDCDCD;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-card__item-info{
+
+  display: flex;
+  flex-direction: column;
+}

@@ -1,0 +1,28 @@
+.grid-header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 15px;
+
+  h1{
+    font-size: 28px;
+  }
+}
+
+.order-grid{
+  width: 800px;
+  margin-top: 200px;
+}
+
+.order-btn{
+  background-color: #F0F0F0 ;
+  border: solid 1px #CDCDCD;
+  border-radius: 8px;
+  padding: 5px 15px;
+}
+
+.grid-header-buttons{
+  display: flex;
+  gap: 10px;
+
+}
