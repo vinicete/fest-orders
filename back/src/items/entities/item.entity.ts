@@ -10,7 +10,8 @@ export class Item{
     name: string;
     @Column({name: 'item_desc'})
     description: string;
-    @Column({name: 'item_price'})
+
+    @Column({name: 'item_price', type:'numeric'})
     price: string;
 
     @OneToMany(()=>OrderItem, orderItem=>orderItem.item)
