@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
 import { OrdersService } from "./orders.service";
 import { CreateEmptyOrderDto } from "./dtos/createEmptyOrder.dto";
+import { CreateOrderDto } from "./dtos/createOrder.dto";
 
 
 @Controller('orders')
@@ -9,22 +10,27 @@ export class OrdersController{
   constructor(private readonly ordersService : OrdersService){}
 
   @Get()
-  getItems(){
+  getOrders(){
     return this.ordersService.get()
   }
 
   @Get(':id')
-  getItemsById(@Param('id') id: string){
+  getOrdersById(@Param('id') id: string){
     return this.ordersService.getById(+id)
   }
 
-  @Post()
-  createCustomer(@Body() dto: CreateEmptyOrderDto){
+  @Post(':empty')
+  createEmptyOrder(@Body() dto: CreateEmptyOrderDto){
     return this.ordersService.createEmptyOrder(dto.customerId)
+  }
+
+  @Post()
+  createOrder(@Body() dto: CreateOrderDto){
+    return this.ordersService.createOrder(dto.customerId,dto.itemIds,dto.quantity)
   }
   
   @Delete(':id')
-  deleteCustomer(@Param('id') id: string){
+  deleteOrder(@Param('id') id: string){
     return this.ordersService.remove(+id)
   }
 }
