@@ -4,6 +4,8 @@ import { Order } from "./entities/order.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { CustomersService } from "src/customers/customers.service";
 import { OrderItem } from "./entities/order_item.entity";
+import { OrderResponseDto } from "./dtos/orderResponse.dto";
+import { OrderItemResponseDto } from "./dtos/orderItemResponse.dto";
 
 
 @Injectable()
@@ -18,6 +20,7 @@ export class OrdersService{
   ){}
 
 
+
   async get(){
 
     const orders =  await this.orderRepository.find({
@@ -29,8 +32,45 @@ export class OrdersService{
       },
     });
 
+    if(!orders){
+      throw new NotFoundException()
+    }
 
-    const ordersDto = null
+    const newOrders : OrderResponseDto[] = orders.map((order)=>{
+      
+      const res : OrderResponseDto = new OrderResponseDto()
+
+      let orderPrice : number = 0
+
+      let orderItems : OrderItemResponseDto[] = order.orderItems.map((item)=>{
+        let itemRes : OrderItemResponseDto = new OrderItemResponseDto()
+
+        const itemPrice = Number.parseFloat(item.item.price)
+        
+        itemRes.name = item.item.name;
+        itemRes.description = item.item.description;
+        itemRes.price = itemPrice;
+        itemRes.quantity = item.quantity;
+        
+        orderPrice+=itemPrice
+
+        return itemRes
+      })
+
+      res.id = order.id;
+      res.orderPrice = orderPrice
+      res.date = order.date;
+      res.orderItems = orderItems;
+      res.customer = order.customer;
+
+      
+      return res 
+    })
+
+    
+
+
+    return newOrders
   }
 
   async getById(id: number){
