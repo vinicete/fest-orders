@@ -4,10 +4,10 @@
     <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
   </div>
   <div class="modal-body">
-    <h5>Cliente: {{ order.customer.name }}</h5>
+    <p><strong>Cliente:</strong> {{ order.customer.name }}</p>
     <p><strong>Email:</strong> {{ order.customer.email }}</p>
     <p><strong>Telefone:</strong> {{ order.customer.telephone }}</p>
-    <p><strong>Data:</strong> {{ order.date | date:'fullDate' }} às {{ order.date | date:'shortTime' }}</p>
+    <p><strong>Data:</strong> {{ order.date | date:'dd/MM/yyyy' }} às {{ order.date | date:'HH:mm' }}</p>
 
     <hr>
     <h5>Itens do Pedido:</h5>
@@ -22,7 +22,8 @@
       }
     </ul>
   </div>
-  <div class="modal-footer">
+  <div class="modal-footer justify-content-between">
+    <p><strong>Total:</strong> {{ total | currency:'BRL' }}</p>
     <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Fechar</button>
   </div>
 }

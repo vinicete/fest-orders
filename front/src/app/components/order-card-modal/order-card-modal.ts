@@ -12,6 +12,22 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class OrderCardModal {
   activeModal = inject(NgbActiveModal)
 
+  ngOnInit(): void {
+    if (this.order) {
+      this.calcTotal(this.order); 
+    }
+  }
+
+  total: number = 0;
+
+  calcTotal(order: any) {
+    
+    order.orderItems.forEach((item: any) => {
+      this.total += item.price * item.quantity;
+    });
+  
+  }
+  
   @Input()
   order: any
 }

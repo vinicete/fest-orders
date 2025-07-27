@@ -1,7 +1,7 @@
 @if(orderData){
   <div class="order-card" (click)="openModal()">  
   <div class="order-card__item-info">
-    <span>{{orderData.date | date:'dd/MM/yyyy' }}</span>
+    <span class="order-card__item-info-date">{{orderData.date | date:'dd/MM/yyyy' }}</span>
     <span>Pedido #{{orderData.id}}</span>
   </div>
 
@@ -14,7 +14,7 @@
 @else{
   <div class="order-card">  
     <div class="order-card__item-info">
-      <span>25/02/2005</span>
+      <span class="order-card__item-info-date">25/02/2005</span>
       <span>Pedido 1</span>
     </div>
 

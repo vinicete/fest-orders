@@ -11,7 +11,10 @@
 
 .order-grid{
   width: 800px;
-  margin-top: 200px;
+  max-width: 100%;
+  margin-top: 100px;
+  padding-bottom: 100px !important;
+  padding: 0px 20px;
 }
 
 .order-btn{
@@ -19,10 +22,102 @@
   border: solid 1px #CDCDCD;
   border-radius: 8px;
   padding: 5px 15px;
+
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.02); 
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); 
+  }
 }
 
 .grid-header-buttons{
   display: flex;
   gap: 10px;
 
+}
+
+/* Responsividade para mobile */
+@media (max-width: 768px) {
+  .order-grid {
+      width: 600px;
+      margin-top: 50px;
+      padding: 0px 15px;
+      padding-bottom: 50px !important;
+  }
+
+  .grid-header {
+      flex-direction: column;
+      gap: 15px;
+      align-items: flex-start;
+  }
+
+  .grid-header h1 {
+      font-size: 24px;
+      margin-bottom: 0;
+  }
+
+  .grid-header-buttons {
+      width: 100%;
+      justify-content: flex-start;
+  }
+
+  .order-btn {
+      flex: 1;
+      text-align: center;
+      min-width: auto;
+  }
+}
+
+@media (max-width: 610px) {
+  .order-grid {
+      width: 400px;
+      padding: 0px 10px;
+      margin-top: 30px;
+  }
+
+  .grid-header h1 {
+      font-size: 22px;
+  }
+
+  .order-btn {
+      padding: 8px 12px;
+      font-size: 14px;
+  }
+}
+
+@media (max-width: 428px) {
+  .order-grid {
+      width: 300px;
+      padding: 0px 10px;
+      margin-top: 30px;
+      font-size: 14px;
+  }
+
+  .grid-header h1 {
+      font-size: 22px;
+      padding: 0px ;
+  }
+
+  .order-btn {
+      padding: 8px 12px;
+      font-size: 14px;
+  }
+}
+
+@media (max-width: 300px) {
+  .order-grid {
+      width: 240px;
+      padding: 0px 10px;
+      margin-top: 30px;
+  }
+
+  .grid-header h1 {
+      font-size: 22px;
+  }
+
+  .order-btn {
+      padding: 8px 12px;
+      font-size: 14px;
+  }
 }

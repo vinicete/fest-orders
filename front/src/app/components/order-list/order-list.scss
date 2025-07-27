@@ -1,6 +1,6 @@
 .order-list{
   
-  height: 300px;
+  
   border-radius: 20px;
   padding: 20px;
   display: flex;
@@ -8,4 +8,15 @@
   gap: 10px;
   background-color: #F0F0F0 ;
   border: solid 1px #CDCDCD;
+}
+
+
+@media (max-width: 428px) {
+  .order-list{
+    padding: 10px;
+  }
+}
+
+@media (max-width: 300px) {
+  
 }
