@@ -6,6 +6,7 @@ import { CustomersService } from "src/customers/customers.service";
 import { OrderItem } from "./entities/order_item.entity";
 import { OrderResponseDto } from "./dtos/orderResponse.dto";
 import { OrderItemResponseDto } from "./dtos/orderItemResponse.dto";
+import { OrderItemDto } from "./dtos/orderItem.dto";
 
 
 @Injectable()
@@ -92,7 +93,7 @@ export class OrdersService{
     return await this.orderRepository.save(newOrder)
   }
 
-  async createOrder(customerId: number, itemIds: number[], quantity: number){ //pedido com itens
+  async createOrder(customerId: number, orderItems: OrderItemDto[]){ //pedido com itens
     const cust = await this.customerService.getById(customerId)
     if (!cust) {
       throw new NotFoundException(`Customer with ID #${customerId} not found`)
@@ -104,12 +105,13 @@ export class OrdersService{
 
     const newOrder = this.orderRepository.create({customer: {id : customerId}})
     const order = await this.orderRepository.save(newOrder)
-    itemIds.forEach(async item => {
+
+    orderItems.forEach(async item => {
       const newOrderItem = this.orderItemRepository
       .create({
         orderId: newOrder.id,
-        itemId: item,
-        quantity: quantity
+        itemId: item.itemId,
+        quantity: item.quantity
       })
 
       await this.orderItemRepository.save(newOrderItem)

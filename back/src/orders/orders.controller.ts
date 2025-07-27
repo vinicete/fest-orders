@@ -26,7 +26,7 @@ export class OrdersController{
 
   @Post()
   createOrder(@Body() dto: CreateOrderDto){
-    return this.ordersService.createOrder(dto.customerId,dto.itemIds,dto.quantity)
+    return this.ordersService.createOrder(dto.customerId,dto.orderItems)
   }
   
   @Delete(':id')
