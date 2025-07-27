@@ -1,4 +1,9 @@
 <div class="order-list ">
-  <order-card></order-card>
-  <order-card></order-card>
+  @for(order of orders; track order.id){
+    <order-card [orderData]="order"></order-card>
+  } @empty{
+    <p>Nenhum pedido encontrado</p>
+  }
+  
+  
 </div>

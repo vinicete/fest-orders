@@ -1,11 +1,29 @@
-<div class="order-card">  
+@if(orderData){
+  <div class="order-card">  
   <div class="order-card__item-info">
-    <span>25/02/2005</span>
-    <span>Pedido 1</span>
+    <span>{{orderData.date | date:'dd/MM/yyyy' }}</span>
+    <span>Pedido #{{orderData.id}}</span>
   </div>
 
   <div class="order-card__customer-info">
-    <span>Vini</span>
+    <span>{{orderData.customer.name}}</span>
   </div>
   
 </div>
+}
+@else{
+  <div class="order-card">  
+    <div class="order-card__item-info">
+      <span>25/02/2005</span>
+      <span>Pedido 1</span>
+    </div>
+
+    <div class="order-card__customer-info">
+      <span>Vini</span>
+    </div>
+    
+  </div>
+}
+
+
+
