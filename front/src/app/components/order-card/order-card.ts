@@ -16,12 +16,9 @@ export class OrderCard {
 
   private modalService = inject(NgbModal);
 
-  // 4. Crie um método para abrir o modal
   openModal() {
-    // Abre o OrderModalComponent
-    const modalRef = this.modalService.open(OrderCardModal, { size: 'lg' });
     
-    // Passa os dados do pedido atual para a propriedade 'order' do modal
+    const modalRef = this.modalService.open(OrderCardModal, { size: 'lg' });
     modalRef.componentInstance.order = this.orderData;
   }
 }

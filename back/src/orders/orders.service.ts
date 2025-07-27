@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { Repository } from "typeorm";
+import { Between, FindOptionsWhere, ILike, Repository } from "typeorm";
 import { Order } from "./entities/order.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { CustomersService } from "src/customers/customers.service";
@@ -7,6 +7,7 @@ import { OrderItem } from "./entities/order_item.entity";
 import { OrderResponseDto } from "./dtos/orderResponse.dto";
 import { OrderItemResponseDto } from "./dtos/orderItemResponse.dto";
 import { OrderItemDto } from "./dtos/orderItem.dto";
+import { OrderFilterDto } from "./dtos/orderFilter.dto";
 
 
 @Injectable()
@@ -22,9 +23,24 @@ export class OrdersService{
 
 
 
-  async get(){
+  async get(filters: OrderFilterDto){
 
+    //filtragem
+    const { name, startDate, endDate } = filters;
+
+    const whereConditions: FindOptionsWhere<Order> = {};
+
+    if (name) {
+      whereConditions.customer = { name: ILike(`%${name}%`) };
+    }
+
+    if (startDate && endDate) {
+      whereConditions.date = Between(new Date(startDate), new Date(endDate));
+    }
+
+    
     const orders =  await this.orderRepository.find({
+      where : whereConditions,
       relations: {
         customer: true,   
         orderItems: {     
@@ -41,7 +57,7 @@ export class OrdersService{
       
       const res : OrderResponseDto = new OrderResponseDto()
 
-      let orderPrice : number = 0
+      let orderPrice : number = 0 //orderPrice é o valor unitario dos itens somados, nao o valor total, segui dessa forma pois é assim que esta no pedidos.json, mas eu poderia mudar
 
       let orderItems : OrderItemResponseDto[] = order.orderItems.map((item)=>{
         let itemRes : OrderItemResponseDto = new OrderItemResponseDto()

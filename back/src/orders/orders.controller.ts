@@ -1,7 +1,8 @@
-import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Query } from "@nestjs/common";
 import { OrdersService } from "./orders.service";
 import { CreateEmptyOrderDto } from "./dtos/createEmptyOrder.dto";
 import { CreateOrderDto } from "./dtos/createOrder.dto";
+import { OrderFilterDto } from "./dtos/orderFilter.dto";
 
 
 @Controller('orders')
@@ -10,8 +11,8 @@ export class OrdersController{
   constructor(private readonly ordersService : OrdersService){}
 
   @Get()
-  getOrders(){
-    return this.ordersService.get()
+  getOrders(@Query() filterDto: OrderFilterDto){
+    return this.ordersService.get(filterDto)
   }
 
   @Get(':id')
