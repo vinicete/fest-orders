@@ -1,0 +1,29 @@
+<div class="modal-header">
+  <h4 class="modal-title">Filtrar Pedidos</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+</div>
+
+<div class="modal-body">
+  <form (ngSubmit)="applyFilters()">
+    <div class="mb-3">
+      <label for="customerName" class="form-label">Nome do Cliente</label>
+      <input type="text" class="form-control" id="customerName" [(ngModel)]="filters.name" name="customerName">
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="startDate" class="form-label">Data de Início</label>
+        <input type="date" class="form-control" id="startDate" [(ngModel)]="filters.startDate" name="startDate">
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="endDate" class="form-label">Data de Fim</label>
+        <input type="date" class="form-control" id="endDate" [(ngModel)]="filters.endDate" name="endDate">
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="clearFilters()">Limpar</button>
+  <button type="button" class="btn btn-primary" (click)="applyFilters()">Aplicar Filtros</button>
+</div>

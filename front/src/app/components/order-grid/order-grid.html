@@ -4,10 +4,10 @@
     <h1>Pedidos</h1>
     <div class="grid-header-buttons">
       <button class="order-btn">Criar +</button>
-      <button class="order-btn">Filtro</button>
+      <button class="order-btn" (click)="openFilterModal()">Filtro</button>
     </div>
   </div>
 
-  <order-list></order-list>
+  <order-list [filters]="filters"></order-list>
 
 </div>
