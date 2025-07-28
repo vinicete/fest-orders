@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'create-modal',
@@ -9,6 +9,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class CreateModal {
 
-  activeModal = inject(NgbModal)
+  activeModal = inject(NgbActiveModal)
+  
+  
 
 }
