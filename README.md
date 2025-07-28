@@ -88,7 +88,7 @@ Se der tempo→→
 
 Por enquanto vou utilizar o postgres localmente pois gosto da visualizacao do pgadmin porem vou setar as configuracoes pra subir um container tambem.
 
-![image.png](attachment:baf2cfb8-abbb-468e-b848-3e47fa6aa240:image.png)
+![db.png](./docs/images/db.png)
 
 Fiz dessa forma inicialmente apenas pra me localizar melhor e deixar visivel as tabelas, apesar de eu usar o typeOrm e fazer automaticamente a criacao delas.
 
@@ -108,9 +108,9 @@ Fiz a estilização básica com css padrão pois confesso que não conhecia o pa
 
 Deixei o design responsivo, conseguindo listar os pedidos criados pelo postman (botao de criar ainda n funciona) e mostrando as infos no modal 
 
-![image.png](attachment:209ec043-0e32-42a9-926b-17fa37baccce:image.png)
+![home.png](./docs/images/home.png)
 
-![image.png](attachment:c4d0fac2-9c51-44c4-9d73-fc8eaf6b59c0:image.png)
+![card-modal.png](./docs/images/card-modal.png)
 
 A filtragem foi uma parte complicada pois percebi que para filtrar por preço eu deveria fazer algumas alterações na entidade order, entao eu decidi filtrar apenas por data e nome por enquanto.
 
