@@ -1,9 +1,11 @@
 <div class="order-grid">
 
   <div class="grid-header">
-    <h1>Pedidos</h1>
+    <div class="">
+      <h1>Pedidos</h1>
+    </div>
     <div class="grid-header-buttons">
-      <button class="order-btn">Criar +</button>
+      <button class="order-btn" (click)="openCreateModal()">Criar +</button>
       <button class="order-btn" (click)="openFilterModal()">Filtro</button>
     </div>
   </div>

@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { OrderList } from '../order-list/order-list';
 import { FilterModal } from '../filter-modal/filter-modal';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CreateModal } from '../create-modal/create-modal';
 
 @Component({
   selector: 'order-grid',
@@ -32,6 +33,13 @@ export class OrderGrid {
           this.filters = {};
         }
       }
+      
+  }
+
+
+  async openCreateModal() {
+      
+      const modalRef = this.modalService.open(CreateModal, { size: 'lg' });
       
   }
 }
