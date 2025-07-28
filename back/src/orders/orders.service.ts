@@ -8,6 +8,7 @@ import { OrderResponseDto } from "./dtos/orderResponse.dto";
 import { OrderItemResponseDto } from "./dtos/orderItemResponse.dto";
 import { OrderItemDto } from "./dtos/orderItem.dto";
 import { OrderFilterDto } from "./dtos/orderFilter.dto";
+import { ItemsService } from "src/items/items.service";
 
 
 @Injectable()
@@ -18,7 +19,9 @@ export class OrdersService{
     private readonly orderRepository: Repository<Order>,
     @InjectRepository(OrderItem)
     private readonly orderItemRepository: Repository<OrderItem>,
-    private readonly customerService : CustomersService
+    private readonly customerService : CustomersService,
+    private readonly itemService : ItemsService
+    
   ){}
 
 
@@ -113,6 +116,13 @@ export class OrdersService{
     const cust = await this.customerService.getById(customerId)
     if (!cust) {
       throw new NotFoundException(`Customer with ID #${customerId} not found`)
+    }
+
+    const itemIds = orderItems.map(item => item.itemId);
+    const items = await this.itemService.findByIds(itemIds);
+
+    if (items.length !== itemIds.length) {
+      throw new NotFoundException('Some of the provided Ids wasn\'t found!');
     }
 
     /*if(!itemIds){

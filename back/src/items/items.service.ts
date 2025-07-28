@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { Item } from "./entities/item.entity";
 import { CreateItemDto } from "./dtos/createItem.dto";
-import { Repository } from "typeorm";
+import { In, Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 
 
@@ -23,6 +23,12 @@ export class ItemsService{
       }
   
       return item
+    }
+
+    async findByIds(ids: number[]) {
+      return this.itemRepository.findBy({
+        id: In(ids), 
+      });
     }
   
     async create(item: CreateItemDto){
