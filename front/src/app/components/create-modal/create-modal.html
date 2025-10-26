@@ -1,16 +1,56 @@
 <div class="modal-header">
-  <h4 class="modal-title">Modal de criação? ......</h4>
-  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()" ></button>
-</div>
-<div class="m-3 d-flex">
-  <img src="images/joia.jpeg" alt="">
-  <div class="p-3">
-    <p>Olá devs da Feng!!</p>
-    <p><strong>Infelizmente </strong>não consegui implementar o modal de criação de itens, clientes e pedidos, devido ao <strong>tempo</strong> então peço <strong>encarecidamente</strong> que para criá-los utilizem alguma ferramenta como postman :)</p>
-    <p>Desde já agradeço pelo desafio e oportunidade 👍</p>
-  </div>
+  <h4 class="modal-title">Criar Pedido</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
 </div>
 
 <div class="modal-body">
-  
+  <div class="mb-3">
+    <label class="form-label">Cliente</label>
+    <select class="form-select" [(ngModel)]="selectedCustomerId">
+      <option [ngValue]="null" disabled>Selecione um cliente</option>
+      @for (customer of customers; track customer.id) {
+        <option [ngValue]="customer.id">{{ customer.name }}</option>
+      }
+    </select>
+  </div>
 
+  <hr>
+  <h5>Adicionar Itens</h5>
+
+  <div class="row align-items-end g-2 mb-3">
+    <div class="col-7">
+      <label class="form-label">Item</label>
+      <select class="form-select" [(ngModel)]="selectedItemId">
+        <option [ngValue]="null" disabled>Selecione um item</option>
+        @for (item of items; track item.id) {
+          <option [ngValue]="item.id">{{ item.name }}</option>
+        }
+      </select>
+    </div>
+    <div class="col-3">
+      <label class="form-label">Qtd.</label>
+      <input type="number" class="form-control" [(ngModel)]="selectedQuantity" min="1">
+    </div>
+    <div class="col-2">
+      <button type="button" class="btn btn-success w-100" (click)="addItemToOrder()">Add</button>
+    </div>
+  </div>
+
+  <h6>Itens no Pedido:</h6>
+  <ul class="list-group">
+    @for (item of currentOrderItems; track $index) {
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ item.name }} ({{ item.quantity }}x)
+        <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeItem($index)">Remover</button>
+      </li>
+    }
+    @if (currentOrderItems.length === 0) {
+      <li class="list-group-item text-muted">Nenhum item adicionado.</li>
+    }
+  </ul>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Cancelar</button>
+  <button type="button" class="btn btn-primary" (click)="saveOrder()">Salvar Pedido</button>
+</div>
