@@ -1,145 +1,86 @@
-# Descrição da Solução e Detalhamento do Pogresso - Desafio Feng
+# Fest Orders - Gerenciador de Pedidos
 
-Minha solução é o desenvolvimento do desafio para a vaga de desenvolvedor fullstack na Feng, trata-se de uma aplicação fullstack em Angular e Nestjs, utilizando Postgres e Bootstrap pra estilização. Seu objetivo é listar os pedidos de itens de um festival e exibir as informações pertinentes a ele.
+Uma aplicação fullstack desenvolvida para listar e gerenciar os pedidos de itens de um festival, exibindo informações pertinentes de forma clara e objetiva, utilizando Nest.js e Angular.
 
-Em seguida segue o registro do meu progresso no desafio-feng-dev.
+## Funcionalidades Principais
 
-## Definindo o setup:
+  * **Listagem de Pedidos:** Exibe todos os pedidos com suas informações essenciais.
+  * **Filtros Dinâmicos:** Permite a filtragem de pedidos por nome do cliente e data.
+  * **Modal de Detalhes:** Apresenta informações detalhadas de cada pedido ao ser selecionado.
+  * **Gerenciamento (CRUD):** Funcionalidades de criação, leitura, atualização e deleção para Pedidos, Clientes e Itens.
+  * **Design Responsivo:** Interface adaptável para diferentes tamanhos de tela (desktop e mobile).
 
-Comecei fazendo meu registro no gitlab, criando e referenciando a chave SSH, depois fiz o fork do repo e clonei. Em seguida baixei o git kraken e instalei a cli do angular e nest.
+## Tecnologias Utilizadas
 
-Criei uma branch nova → dev-v.01 e fiz a criacao dos diretorios back e front.
+| Categoria | Tecnologia |
+| :--- | :--- |
+| **Frontend** | Angular.js, Bootstrap, CSS |
+| **Backend** | Nest.js, TypeORM |
+| **Banco de Dados** | PostgreSQL |
 
-## Primeiras decisões:
+## Design e Prototipação
 
-Decidi pelo Angular.js para o frontend e Nest.js para o backend por serem os mais populares e o que foi requisitado na descrição da vaga, nada em especial ou preferência.
+O design inicial da interface foi prototipado no Figma, focando em uma experiência de usuário simples e funcional.
 
-Optei por uma spa pois trata-se de um sistema simples, apenas uma pagina e sem necessidade de seo.
+  * **[Link para o protótipo no Figma](https://www.figma.com/design/5tAIJ8CWFh1dOb94EruRQj/Untitled?node-id=0-1&p=f&t=PIo0NInISJgX8CwL-0)**
 
-Criei os projetos nas pastas e fiz o primeiro commit :) 
+## Modelagem do Banco de Dados
 
-## Requerimentos:
+O banco de dados foi modelado para normalizar as informações de clientes, itens e os pedidos que os relacionam. O TypeORM é utilizado para gerenciar as entidades e migrações automaticamente.
 
-Vou listar o que precisa fazer →
+## Como Executar o Projeto
 
-- [x]  Levantar requisitos
-- [x]  Documentar as APIs
-- [x]  Modelar o banco (Postgres)
-    
-    Por enquanto não vou implementar autenticação, se der tempo faço depois
-    
-- [x]  Instalar outras dependencias (typeorm, db, etc)
-- [x]  Fazer design inicial no figma
-    
-    Apenas o simples, deixo bonito depois 
-    
-- [x]  Desenvolver funcionalidades principais
-- [x]  Desenvolver o front com responsividade
-- [x]  Integrar tudo claro
+O projeto é dividido em duas pastas principais (`back` e `front`) e utiliza o Docker Compose para orquestrar o banco de dados PostgreSQL.
 
-Se der tempo→→
+### Pré-requisitos
 
-- [ ]  Fazer autenticação e login (com jwt acho)
-- [ ]  Deixar mais bonito
-- [ ]  Testes com Jest
-- [ ]  Ver como posso usar Redis
-- [ ]  Gerenciar autorização (adm, user comum)
+  * [Node.js](https://nodejs.org/en/) (v18+ recomendado)
+  * [Angular CLI](https://angular.io/cli) (`npm install -g @angular/cli`)
+  * [NestJS CLI](https://docs.nestjs.com/) (`npm install -g @nestjs/cli`)
+  * [Docker](https://www.docker.com/products/docker-desktop/)
 
-### Requisitos:
+### Passos para Instalação
 
-- [x]  Seção de filtros
-- [x]  Lista de pedidos filtrados
-- [x]  Modal de exibição de informações
-- [ ]  Botão de criação e deleção de pedido (se tiver auth seria interessante excluir apenas os seus)
+1.  **Clone o repositório:**
 
-### Documentação de APIs:
+    ```bash
+    git clone https://github.com/seu-usuario/seu-repositorio.git
+    cd seu-repositorio
+    ```
 
-- [x]  Clientes
-    - [x]  GET
-    - [x]  POST
-    - [x]  DELETE
-    - [ ]  PUT
-- [x]  Itens
-    - [x]  GET
-    - [x]  POST
-    - [x]  DELETE
-    - [ ]  PUT
-- [x]  Pedidos
-    - [x]  GET
-        - [x]  GET byDateAsc
-        - [x]  GET byDateDesc
-        - [x]  GET byName
-        - [ ]  GET byValue
-    - [x]  POST
-    - [x]  POST Empty
-    - [x]  DELETE
-    - [ ]  PUT
+2.  **Suba o container do Banco de Dados:**
+    (Na raiz do projeto, onde o `docker-compose.yml` está localizado)
 
-### Pendências:
+    ```bash
+    docker-compose up -d
+    ```
 
-- [x]  Aplicar filtros no get
-- [x]  Deixar responsivo
-- [ ]  Mudar nome do atributo de price pra value
-- [x]  Tratar formato de data do pedido
-- [ ]  Filtragem por preço
-- [x]  Criar arquivo docker pro pg
+3.  **Instale e execute o Backend (Nest.js):**
 
-## Modelagem dos dados:
+    ```bash
+    cd back
+    npm install
+    npm run start:dev
+    ```
 
-Por enquanto vou utilizar o postgres localmente pois gosto da visualizacao do pgadmin porem vou setar as configuracoes pra subir um container tambem.
+    O servidor backend estará rodando em `http://localhost:3000`.
 
-![db.png](./docs/images/db.png)
+4.  **Instale e execute o Frontend (Angular):**
+    (Em um novo terminal)
 
-Fiz dessa forma inicialmente apenas pra me localizar melhor e deixar visivel as tabelas, apesar de eu usar o typeOrm e fazer automaticamente a criacao delas.
+    ```bash
+    cd front
+    npm install
+    ng serve
+    ```
 
-Após finalizado o crud básico, fiz o design no figma:
+    A aplicação estará acessível em `http://localhost:4200`.
 
-https://www.figma.com/design/5tAIJ8CWFh1dOb94EruRQj/Untitled?node-id=0-1&p=f&t=PIo0NInISJgX8CwL-0
+-----
 
-Bem simples, mas bonitinho
+## Autor
 
-## Desenvolvimento:
+Desenvolvido por **Vinícius Araújo Messias**
 
-Fiz a lógica de criação e retorno das informações do pedido de acordo com o arquivo “pedidos.json” para que eu pudesse ao menos listar os pedidos e mostrar o modal.
-
-Comecei a implementar o design no front e pra começar instalei o bootstrap pra facilitar um pouco.
-
-Fiz a estilização básica com css padrão pois confesso que não conhecia o padrão BEM e o Scss que o angular recomenda, portanto se der tempo eu mudo (estou mt habituado ao tailwind kkk)
-
-Deixei o design responsivo, conseguindo listar os pedidos criados pelo postman (botao de criar ainda n funciona) e mostrando as infos no modal 
-
-![home.png](./docs/images/home.png)
-
-![card-modal.png](./docs/images/card-modal.png)
-
-A filtragem foi uma parte complicada pois percebi que para filtrar por preço eu deveria fazer algumas alterações na entidade order, entao eu decidi filtrar apenas por data e nome por enquanto.
-
-Utilizei bastante dos modais do bootstrap com angular e dos recursos de form do angular, facilitam muito o desenvolvimento
-
-Consegui finalizar a listagem com filtro de data e nome, decidi implementar um arquivo docker-compose para utilizar o banco de dados de maneira fácil.
-
-Acredito que eu implementei todas as funcionalidades requisitadas explicitamente
-
-- Seção de filtros
-- Lista dos pedidos filtrados
-- Modal exibindo informações
-
-Como falta pouco tempo vou criar o modal de criação de pedido (apesar de não ter sido requisitado explicitamente no desafio eu interpretei que precisava ter pois trata-se da vaga fullstack)
-
-Infelizmente não consegui filtrar por preço, tentei algumas abordagens mas precisaria de diversas modificações e não tenho mais tempo
-
-## Finalizado!
-
-Agora são 00:35, segunda feira dia 28/07. To muito feliz por ter conseguido completar o desafio, eu me dediquei quase 100% nele desde que me foi apresentado. Talvez não tenha conseguido completar totalmente, mas independente disso foi uma experiência de aprendizado, e espero que vos agrade :) 
-
-Eu dividi em 2 branches, uma até 23:59 do sábado (dev-v.01), pois foi ali que terminou os 5 dias corridos do prazo, e a outra (dev-v.02) vou entregar na segunda pela manhã, como foi autorizado pela Letícia, o que permitiu eu finalizar com tranquilidade.
-
-Não sei como vocês lidam com isso mas eu tentei minimizar ao máximo o uso de IA no desenvolvimento, baseando-me apenas em documentação, videos, tutoriais, mas claro que não foi 100%, tentei usá-la de maneira consciente e mais como ferramenta de pesquisa rápida.
-
-No mais é isso, quero muito seguir em frente com a vaga por isso dei meu máximo nesse desafio, espero entrar em contato com vocês em breve, muito obrigado!
-
-Meu currículo está anexado mas segue meus contatos:
-
-https://www.linkedin.com/in/viniciusaraujomessias/
-
-https://github.com/vinicete
+  * **LinkedIn:** [https://www.linkedin.com/in/viniciusaraujomessias/](https://www.linkedin.com/in/viniciusaraujomessias/)
+  * **GitHub:** [https://github.com/vinicete](https://github.com/vinicete)
