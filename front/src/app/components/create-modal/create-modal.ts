@@ -71,14 +71,19 @@ export class CreateModal {
     // Monta o objeto final para enviar de volta
     const finalOrderDto = {
       customerId: this.selectedCustomerId,
-      items: itemsDto
+      orderItems: itemsDto
     };
 
 
-    this.http.post('http://localhost:3000/orders',finalOrderDto)
-    .subscribe()
-
-    this.activeModal.close(finalOrderDto);
+    this.http.post('http://localhost:3003/orders',finalOrderDto)
+      .subscribe({
+        next: () => {
+          this.activeModal.close(finalOrderDto);
+        },
+        error: (err) => {
+          console.error(err)
+        }
+      })
   }
 
   ngOnInit(){
@@ -88,7 +93,7 @@ export class CreateModal {
 
   fetchCustomers():void{
 
-    this.http.get<any[]>('http://localhost:3000/customers')
+    this.http.get<any[]>('http://localhost:3003/customers')
     .subscribe(data=>{
       this.customers = data
       console.log(this.customers)
@@ -96,7 +101,7 @@ export class CreateModal {
   }
 
   fetchItems(){
-    this.http.get<any[]>('http://localhost:3000/items')
+    this.http.get<any[]>('http://localhost:3003/items')
     .subscribe(data=>{
       this.items = data
       console.log(this.items)

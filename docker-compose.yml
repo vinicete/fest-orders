@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  # 1. Banco de Dados
+  db:
+    image: postgres:15-alpine
+    container_name: postgres_db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres123
+      - POSTGRES_DB=feng
+    ports:
+      - "5433:5432" # Mantido na 5433 para não conflitar com o Windows
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    restart: always
+
+  # 2. Back-end (NestJS)
+  api:
+    build: 
+      context: ./back
+      dockerfile: Dockerfile
+    container_name: fest_orders_api
+    ports:
+      - "3003:3002"
+    volumes:
+      # Espelha o código da sua máquina para o container (Hot Reload)
+      - ./back:/usr/src/app
+      # Ignora o espelhamento da pasta node_modules (usa a de dentro do container)
+      - /usr/src/app/node_modules
+    env_file:
+      - ./back/.env
+    environment:
+      - PG_HOST=db
+      - PG_PORT=5432
+    depends_on:
+      - db
+    command: npm run start:dev # Comando para rodar com hot-reload no NestJS
+
+  # 3. Front-end (Angular)
+  web:
+    build: 
+      context: ./front
+      dockerfile: Dockerfile
+    container_name: fest_orders_web
+    ports:
+      - "4200:4200" # Porta padrão do Angular
+    volumes:
+      - ./front:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - api
+    command: npm run start -- --host 0.0.0.0 --poll 2000 # Angular precisa de poll no Windows para Hot-Reload

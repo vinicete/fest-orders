@@ -42,7 +42,7 @@ export class OrderList {
       params = params.append('endDate', filters.endDate);
     }
 
-    this.http.get<any[]>('http://localhost:3000/orders',{
+    this.http.get<any[]>('http://localhost:3003/orders',{
       params
     })
     .subscribe(data=>{
