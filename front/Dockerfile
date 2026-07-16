@@ -1,19 +1,23 @@
-FROM node:22-alpine
-
+# Estágio 1: Build (Compila o código TypeScript para arquivos estáticos)
+FROM node:22-alpine AS build
 WORKDIR /usr/src/app
 
 # Copia os arquivos de dependência primeiro (para usar o cache do Docker)
 COPY package*.json ./
-
-# Instala as dependências (e o Angular CLI globalmente para facilitar)
-RUN npm install -g @angular/cli
 RUN npm install
 
 # Copia o resto do código
 COPY . .
 
-# A porta padrão do Angular
-EXPOSE 4200
+# Faz a compilação pesada
+RUN npm run build --configuration=production
 
-# O comando para rodar fica no docker-compose.yml
-CMD ["npm", "start"]
+# Estágio 2: Produção (Servidor web Nginx super leve)
+FROM nginx:alpine
+# Copia APENAS os arquivos finais prontos para o Nginx (sem código fonte e sem node_modules)
+COPY --from=build /usr/src/app/dist/front/browser /usr/share/nginx/html
+
+# A porta padrão do Nginx é 80
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

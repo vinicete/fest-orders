@@ -1,0 +1,17 @@
+services:
+  api:
+    image: viniyuhs/fest-orders-api:latest  # Usa a imagem do Docker Hub (já compilada)
+    ports:
+      - "3003:3002"
+    environment:
+      - PG_USER=postgres
+      - PG_PASSWORD=postgres123
+      - PG_DB=feng
+      - PORT=3002
+    restart: always
+
+  web:
+    image: viniyuhs/fest-orders-web:latest  # Usa a imagem do Docker Hub (Nginx)
+    ports:
+      - "80:80"
+    restart: always

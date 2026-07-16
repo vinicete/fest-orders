@@ -1,18 +1,16 @@
-FROM node:22-alpine
-
+# Estágio 1: Builder — compila TypeScript para JavaScript
+FROM node:22-alpine AS build
 WORKDIR /usr/src/app
-
-# Copia os arquivos de dependência primeiro (para usar o cache do Docker)
 COPY package*.json ./
-
-# Instala as dependências
 RUN npm install
-
-# Copia o resto do código
 COPY . .
+RUN npm run build
 
-# A porta que o app usa
-EXPOSE 3003
-
-# O comando para rodar fica no docker-compose.yml, mas deixamos um padrão aqui
-CMD ["npm", "run", "start:dev"]
+# Estágio 2: Produção — imagem limpa só com o necessário
+FROM node:22-alpine
+WORKDIR /usr/src/app
+COPY package*.json ./
+RUN npm install --omit=dev
+COPY --from=build /usr/src/app/dist ./dist
+EXPOSE 3002
+CMD ["node", "dist/main.js"]
