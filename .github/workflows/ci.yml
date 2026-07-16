@@ -1,20 +1,32 @@
-name: CI - Fest Orders
+name: CI/CD - Fest Orders
 
-# 1. Quando essa automação vai rodar?
 on:
   push:
     branches: [ "master", "main", "dev-v.03" ]
 
 jobs:
-  build-and-test:
-    # 2. Onde o robô do GitHub vai rodar? Em uma máquina Ubuntu novinha.
+  build-and-push:
     runs-on: ubuntu-latest
 
     steps:
-      # 3. Baixa o seu código do GitHub para a máquina do robô
       - name: Checkout do código
         uses: actions/checkout@v4
 
-      # 4. Usa o Docker Compose para tentar "buildar" as imagens
-      - name: Build das imagens Docker
-        run: docker compose build
+      # Novo passo: O robô faz login no seu Docker Hub usando o cofre!
+      - name: Login no Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # Empacota e envia a API (Back-end)
+      - name: Build e Push da API
+        run: |
+          docker build -t viniyuhs/fest-orders-api:latest ./back
+          docker push viniyuhs/fest-orders-api:latest
+
+      # Empacota e envia o Angular (Front-end)
+      - name: Build e Push do Front
+        run: |
+          docker build -t viniyuhs/fest-orders-web:latest ./front
+          docker push viniyuhs/fest-orders-web:latest
