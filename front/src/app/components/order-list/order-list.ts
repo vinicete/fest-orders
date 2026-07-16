@@ -13,26 +13,26 @@ export class OrderList {
 
   private http = inject(HttpClient)
   orders: any[] = []
-  
-   @Input()
+
+  @Input()
   set filters(value: any) {
-    console.log("filtros:",value)
+    console.log("filtros:", value)
     this.fetchOrders(value);
 
   }
 
 
 
-  ngOnInit():void{
+  ngOnInit(): void {
     this.fetchOrders()
   }
 
-  fetchOrders(filters : any = {}):void{
+  fetchOrders(filters: any = {}): void {
 
     //jeito correto de passar params no ng
     let params = new HttpParams()
 
-    if (filters?.name) { 
+    if (filters?.name) {
       params = params.append('name', filters.name);
     }
     if (filters?.startDate) {
@@ -42,13 +42,13 @@ export class OrderList {
       params = params.append('endDate', filters.endDate);
     }
 
-    this.http.get<any[]>('http://localhost:3003/orders',{
+    this.http.get<any[]>('http://52.15.54.131:3003/orders', {
       params
     })
-    .subscribe(data=>{
-      this.orders = data;
-      console.log("Pedidos:", this.orders)
-      console.log("params",params)
-    })
+      .subscribe(data => {
+        this.orders = data;
+        console.log("Pedidos:", this.orders)
+        console.log("params", params)
+      })
   }
 }

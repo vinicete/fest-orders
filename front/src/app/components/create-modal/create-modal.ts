@@ -20,7 +20,7 @@ export class CreateModal {
   private http = inject(HttpClient)
 
 
-   // O que está selecionado nos dropdowns
+  // O que está selecionado nos dropdowns
   selectedCustomerId: number | null = null;
   selectedItemId: number | null = null;
   selectedQuantity: number = 1;
@@ -62,11 +62,11 @@ export class CreateModal {
       alert('Selecione um cliente e adicione pelo menos um item.');
       return;
     }
-    
-    const itemsDto:any[] = this.currentOrderItems.map(item => ({
-        itemId: item.itemId,
-        quantity: item.quantity
-      }))
+
+    const itemsDto: any[] = this.currentOrderItems.map(item => ({
+      itemId: item.itemId,
+      quantity: item.quantity
+    }))
 
     // Monta o objeto final para enviar de volta
     const finalOrderDto = {
@@ -75,7 +75,7 @@ export class CreateModal {
     };
 
 
-    this.http.post('http://localhost:3003/orders',finalOrderDto)
+    this.http.post('http://52.15.54.131:3003/orders', finalOrderDto)
       .subscribe({
         next: () => {
           this.activeModal.close(finalOrderDto);
@@ -86,27 +86,27 @@ export class CreateModal {
       })
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.fetchCustomers()
     this.fetchItems()
   }
 
-  fetchCustomers():void{
+  fetchCustomers(): void {
 
-    this.http.get<any[]>('http://localhost:3003/customers')
-    .subscribe(data=>{
-      this.customers = data
-      console.log(this.customers)
-    })
+    this.http.get<any[]>('http://52.15.54.131:3003/customers')
+      .subscribe(data => {
+        this.customers = data
+        console.log(this.customers)
+      })
   }
 
-  fetchItems(){
-    this.http.get<any[]>('http://localhost:3003/items')
-    .subscribe(data=>{
-      this.items = data
-      console.log(this.items)
-    })
+  fetchItems() {
+    this.http.get<any[]>('http://52.15.54.131:3003/items')
+      .subscribe(data => {
+        this.items = data
+        console.log(this.items)
+      })
   }
-  
+
 
 }
